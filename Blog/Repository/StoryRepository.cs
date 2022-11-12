@@ -46,7 +46,7 @@ namespace Blog.Repository
 
         }
 
-        public static List<Story> GetStoriesByUserId(string uId)//User id olacak
+        public static List<Story> GetStoriesByUserId(string uId)
         {
 
             using var context = new blogContext();
@@ -57,6 +57,7 @@ namespace Blog.Repository
 
 
         }
+
         public static void UpdateStory(UpdateStoryModel updateStory)
         {
             using var context = new blogContext();

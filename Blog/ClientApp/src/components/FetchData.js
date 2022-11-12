@@ -1,71 +1,49 @@
 import React, { Component } from 'react';
 
 export class FetchData extends Component {
-  static displayName = FetchData.name;
+    static displayName = FetchData.name;
 
-  constructor(props) {
-    super(props);
-    this.state = { forecasts: [], loading: true };
-  }
+    constructor(props) {
+        super(props);
+    }
 
-  componentDidMount() {
-    this.populateWeatherData();
-  }
 
-  static renderForecastsTable(forecasts) {
+    render() {
     return (
-      <table className='table table-striped' aria-labelledby="tabelLabel">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {forecasts.map(forecast =>
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+        <div>
+            <h1 onClick={this.Login} id="tabelLabel" >Login</h1>
+            <p onClick={this.GetData}>GET</p >
+            <p onClick={this.LogOut}><em>LOG OUT</em></p>
+        </div>
     );
-  }
+    }
 
-  render() {
-    let contents = this.state.loading
-      ? <p><em>Loading...</em></p>
-      : FetchData.renderForecastsTable(this.state.forecasts);
+    async LogOut() {
+        const response = await fetch('account/logout', {
+            method: 'POST'
+        });
+        const data = await response.json();
+        console.log(data);
+    }
+    async GetData() {
+        const response = await fetch('story');
+        const data = await response.json();
+        console.log(data);
+    }
+     
+    async Login() {
+        const response = await fetch('account/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ UserName: "", Email:"Ali2@gmail.com", Password: "4343"})
+        });
+        const data = await response.json();
+        console.log(data);
 
-    return (
-      <div>
-        <h1 id="tabelLabel" >Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p>
-        {contents}
-      </div>
-    );
-  }
-
-  async populateWeatherData() {
-      const response = await fetch('story', {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              Title: "QQ",
-              Content: "sasfffffd",
-              UserId :"ud-222",
-          })
-      });
-      const data = await response.json();
-      console.log(data);
-
-  }
+    }
 }
+
+

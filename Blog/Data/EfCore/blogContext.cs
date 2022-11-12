@@ -20,8 +20,8 @@ namespace Blog.Data.EfCore
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // 
-                optionsBuilder.UseMySql(Environment.GetEnvironmentVariable("ACONNECTION_STRING"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"));
+                // Environment.GetEnvironmentVariable("ACONNECTION_STRING")
+                optionsBuilder.UseMySql("server=localhost;port=3306;database=blog;uid=root;pwd=mysql1234", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"));
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

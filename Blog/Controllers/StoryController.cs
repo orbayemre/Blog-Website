@@ -10,7 +10,7 @@ namespace Blog.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    //[Authorize]
+    [Authorize]
     public class StoryController : ControllerBase
     {
         [HttpGet]
@@ -18,6 +18,7 @@ namespace Blog.Controllers
         {
             return StoryRepository.Stories;
         }
+
         [HttpGet("{id}")]
         public ActionResult<Story> GetById(string id)
         {
@@ -30,6 +31,7 @@ namespace Blog.Controllers
                 return Ok(ex.Message);
             }
         }
+
         [HttpGet("userAllStories/{uid}")]
         public ActionResult<List<Story>> userAllStories(string uid)
         {
@@ -43,6 +45,7 @@ namespace Blog.Controllers
             }
 
         }
+
         [HttpPost]
         public ActionResult CreateStory(CreateStoryModel createStory)
         {
@@ -79,7 +82,6 @@ namespace Blog.Controllers
             }
             return Ok(JsonSerializer.Serialize("successful"));
         }
-
 
         [HttpPut]
         public ActionResult UpdateStory(UpdateStoryModel updStory)
