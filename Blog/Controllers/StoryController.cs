@@ -75,12 +75,12 @@ namespace Blog.Controllers
             try
             {
                 StoryRepository.DeleteStory(id);
+                return Ok(JsonSerializer.Serialize("successful"));
             }
             catch (Exception ex)
             {
                 return Ok(ex.Message);
             }
-            return Ok(JsonSerializer.Serialize("successful"));
         }
 
         [HttpPut]

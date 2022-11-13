@@ -88,5 +88,15 @@ namespace Blog.Controllers
             return Ok(JsonSerializer.Serialize("Çıkış yapıldı."));
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetUserInfoByUserId(string id)
+        {
+            var userInfo = await _userManager.FindByIdAsync(id);
+            
+            return Ok(userInfo);
+        }
+
+
+
     }
 }
