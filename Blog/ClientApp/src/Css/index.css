@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@400;500&display=swap');
+
+/*
+font-family: 'Signika', sans-serif;
+
+*/
+:root {
+    --first: #184e77;
+    --second: #ee6c4d;
+    --third : #8ecae6;
+}
+
+
+.fontSignika{
+    font-family: 'Signika', sans-serif;
+}
+
+.disableSelect{
+    user-select: none;
+}
+.linearGrad1{
+    background-image:  linear-gradient(to right , var(--second), var(--first));
+}
+
+.linearGrad2{
+    background-image:  linear-gradient(to right , var(--first), var(--second));
+}
+
+.shadow1{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}

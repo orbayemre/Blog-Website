@@ -1,22 +1,17 @@
-import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AppRoutes from './AppRoutes';
-import { Layout } from './components/Layout';
-import './custom.css';
+import {Provider} from "react-redux";
+import store from "./Stores";
 
-export default class App extends Component {
-  static displayName = App.name;
-
-  render() {
+export default function App(){
     return (
-      <Layout>
-        <Routes>
-          {AppRoutes.map((route, index) => {
-            const { element, ...rest } = route;
-            return <Route key={index} {...rest} element={element} />;
-          })}
-        </Routes>
-      </Layout>
+        <Provider store={store}>
+            <Routes>
+              {AppRoutes.map((route, index) => {
+                const { element, ...rest } = route;
+                return <Route key={index} {...rest} element={element} />;
+              })}
+            </Routes>
+        </Provider>
     );
-  }
 }
