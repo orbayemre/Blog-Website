@@ -2,10 +2,25 @@ import {useEffect, useState} from "react";
 import LottieAnimation from "./Common/LottieAnimation";
 import toast, { Toaster } from 'react-hot-toast';
 import {useDispatch} from "react-redux";
-import {logIn} from "../Stores/auth";
+import {setUser} from "../Stores/auth";
+import useGetUser, {setCookie} from "../Hooks/useGetUser";
+
 export default function Auth(){
 
     const [shownLogin,setShownLogin] = useState(true);
+    const userData = useGetUser();
+
+    useEffect(()=>{
+        if(userData === "no user"){
+            //loadingi state i false yap
+        }
+        else if (userData){
+            window.location.replace("https://localhost:44418/");
+        }
+        else{
+            //loadingi state i true yap
+        }
+    },[userData]);
 
     return(
         <>
@@ -76,7 +91,9 @@ const Login = () =>{
             const data = await response.json();
             if(typeof data === "string"){toast.error(data)}
             else{
-                await dispatch(logIn(data));
+                setCookie("uId",data.id,24);
+                await dispatch(setUser(data));
+                window.location.replace("https://localhost:44418/");
             }
         }
         else {
@@ -91,7 +108,9 @@ const Login = () =>{
             const data = await response.json();
             if(typeof data === "string"){toast.error(data)}
             else {
-                await dispatch(logIn(data));
+                setCookie("uId",data.id,24);
+                await dispatch(setUser(data));
+                window.location.replace("https://localhost:44418/");
             }
         }
     }
@@ -137,6 +156,7 @@ const SignUp = () =>{
     const [password,setPassword] = useState("");
     const [confirmPassword,setConfirmPassword] = useState("");
     const [errMess,setErrMess] = useState("");
+    const dispatch = useDispatch();
 
     const validateEmail = (email) => {
         return String(email)
@@ -170,10 +190,14 @@ const SignUp = () =>{
                 body: JSON.stringify({ UserName:username ,Email:email ,Password:password ,ConfirmPassword:confirmPassword})
             });
             const data = await response.json();
-            console.log(data);
+            if(typeof data === "string"){toast.error(data)}
+            else {
+                setCookie("uId",data.id,24);
+                await dispatch(setUser(data));
+                window.location.replace("https://localhost:44418/");
+            }
         }
 
-        console.log(username,email,password,confirmPassword);
 
     }
 
