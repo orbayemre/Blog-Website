@@ -1,5 +1,6 @@
 ﻿using Blog.Data.EfCore;
 using Blog.Data.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -31,16 +32,22 @@ namespace Blog.Controllers
                     Email = registerModel.Email,
                 };
 
-                var result = await _userManager.CreateAsync(user, registerModel.Password);
+                var resultReg = await _userManager.CreateAsync(user, registerModel.Password);
 
-                if (result.Succeeded)
+                if (resultReg.Succeeded)
                 {
                     var userInfo = await _userManager.FindByNameAsync(registerModel.UserName);
-                    return Ok(userInfo);
+                    var resultLog = await _signInManager.PasswordSignInAsync(userInfo, registerModel.Password, true, false);
+
+                    if (resultLog.Succeeded)
+                    {
+                        return Ok(userInfo);
+                    }
+
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
+                    foreach (var error in resultReg.Errors)
                     {
                         return BadRequest(error.Description);
                     }
@@ -93,8 +100,15 @@ namespace Blog.Controllers
         public async Task<ActionResult> GetUserInfoByUserId(string id)
         {
             var userInfo = await _userManager.FindByIdAsync(id);
-            
+
             return Ok(userInfo);
+        }
+        [HttpGet("currentuser")]
+        public async Task<ActionResult> GetCurrentUserInfo()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Ok(JsonSerializer.Serialize("no user"));
+            return Ok(user);
         }
 
 
