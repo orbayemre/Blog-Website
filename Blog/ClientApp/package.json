@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^2.4.3",
+    "@headlessui/react": "^1.7.5",
     "@lottiefiles/lottie-player": "^1.6.1",
     "@reduxjs/toolkit": "^1.9.1",
     "http-proxy-middleware": "^2.0.6",

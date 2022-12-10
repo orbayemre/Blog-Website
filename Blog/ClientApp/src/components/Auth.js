@@ -3,27 +3,43 @@ import LottieAnimation from "./Common/LottieAnimation";
 import toast, { Toaster } from 'react-hot-toast';
 import {useDispatch} from "react-redux";
 import {setUser} from "../Stores/auth";
-import useGetUser, {setCookie} from "../Hooks/useGetUser";
+import useGetUser from "../Hooks/useGetUser";
+import Loading from "./Common/Loading";
+import {NavLink, useSearchParams} from "react-router-dom";
 
 export default function Auth(){
 
     const [shownLogin,setShownLogin] = useState(true);
+    const [loading,setLoading] = useState(true);
     const userData = useGetUser();
+    const [searchParams,setSearchParams] = useSearchParams();
+
+    useEffect(()=>{
+        if(searchParams.get('q') === "register") setShownLogin(false);
+    },[])
 
     useEffect(()=>{
         if(userData === "no user"){
-            //loadingi state i false yap
+            setLoading(false);
         }
         else if (userData){
             window.location.replace("https://localhost:44418/");
         }
         else{
-            //loadingi state i true yap
+            setLoading(true);
         }
     },[userData]);
 
     return(
         <>
+        {loading && <Loading/>}
+        <NavLink to={"/"}  className="absolute top-0 left-0 w-1/4 flex items-center justify-start">
+            <LottieAnimation link={"https://assets4.lottiefiles.com/private_files/lf30_dezgszkb.json"} width={"70px"} height={"70px"}/>
+            <div className="flex flex-col text-2xl fontSource text-second items-center justify-end mr-12 ml-4 space-y-0 leading-none">
+                <span>BLOG</span>
+                <span>WEBSITE</span>
+            </div>
+        </NavLink>
         <div className="w-screen h-screen bg-first flex items-center justify-center">
             <div className="w-2/3 h-2/3 rounded-xl shadow1 flex items-center justify-between">
                 <div className="w-1/2 h-full rounded-l-xl flex flex-col items-center justify-center fontSignika border-r border-first">
@@ -33,7 +49,7 @@ export default function Auth(){
                                 <h1 className="text-xl text-white"> Zaten bir hesabınız var mı? </h1>
                                 <span onClick={() => setShownLogin(true)} className="border-t-4 hover:bg-first duration-500 border-first rounded text-white px-5 py-2 cursor-pointer">Giriş Yap</span>
                             </div>
-                        ) : <Login/>
+                        ) : <Login setLoad={setLoading}/>
                     }
                 </div>
                 <div className="w-1/2 h-full rounded-r-xl flex items-center justify-center fontSignika">
@@ -43,7 +59,7 @@ export default function Auth(){
                             <h1 className="text-xl text-white"> Henüz bir hesabınız yok mu? </h1>
                             <span onClick={() => setShownLogin(false)} className="border-t-4 hover:bg-first duration-500 border-first rounded text-white px-5 py-2 cursor-pointer">Kayıt Ol</span>
                         </div>
-                        ) : <SignUp/>
+                        ) : <SignUp setLoad={setLoading}/>
                     }
                 </div>
             </div>
@@ -55,7 +71,7 @@ export default function Auth(){
     )
 }
 
-const Login = () =>{
+const Login = (setLoad) =>{
 
     const [usernameOrEmail,setUsernameOrEmail] = useState("");
     const [isEmail,setIsEmail] = useState();
@@ -91,9 +107,9 @@ const Login = () =>{
             const data = await response.json();
             if(typeof data === "string"){toast.error(data)}
             else{
-                setCookie("uId",data.id,24);
                 await dispatch(setUser(data));
                 window.location.replace("https://localhost:44418/");
+                setLoad(true);
             }
         }
         else {
@@ -108,9 +124,9 @@ const Login = () =>{
             const data = await response.json();
             if(typeof data === "string"){toast.error(data)}
             else {
-                setCookie("uId",data.id,24);
                 await dispatch(setUser(data));
                 window.location.replace("https://localhost:44418/");
+                setLoad(true);
             }
         }
     }
@@ -149,7 +165,7 @@ const Login = () =>{
 }
 
 
-const SignUp = () =>{
+const SignUp = (setLoad) =>{
 
     const [username,setUsername] = useState("");
     const [email,setEmail] = useState("");
@@ -192,9 +208,9 @@ const SignUp = () =>{
             const data = await response.json();
             if(typeof data === "string"){toast.error(data)}
             else {
-                setCookie("uId",data.id,24);
                 await dispatch(setUser(data));
                 window.location.replace("https://localhost:44418/");
+                setLoad(true);
             }
         }
 
