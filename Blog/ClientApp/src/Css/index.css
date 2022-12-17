@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Signika:wght@400;500&display=swap&family=Source+Serif+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@400;500&display=swap&family=Source+Serif+Pro&display=swap&family=Roboto');
 
 /*
 font-family: 'Signika', sans-serif;
@@ -16,6 +16,13 @@ font-family: 'Source Serif Pro', serif;
 }
 .disableSelect{
     user-select: none;
+}
+
+.ql-font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+.ql-font-signika {
+    font-family: 'Signika', sans-serif;
 }
 
 .fontSignika{
@@ -39,4 +46,15 @@ font-family: 'Source Serif Pro', serif;
 
 .shadow1{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+body::-webkit-scrollbar {
+    width: 4px;
+    padding-left: 2px;
+    transition-duration: 0.2s;
+}
+body::-webkit-scrollbar-track {
+    background: var(--second);
+}
+body::-webkit-scrollbar-thumb {
+    background-color: var(--first);
 }
