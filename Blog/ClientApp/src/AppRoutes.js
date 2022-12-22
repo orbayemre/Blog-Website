@@ -5,6 +5,7 @@ import NewStory from "./components/NewStory";
 import MyStories from "./components/MyStories";
 import MyLikes from "./components/MyLikes";
 import UpdateStory from "./components/UpdateStory";
+import Stories from "./components/Stories";
 const AppRoutes = [
   {
     index: true,
@@ -19,7 +20,7 @@ const AppRoutes = [
     element: <NewStory/>
   },
   {
-    path:'/update',
+    path:'/update/:sId',
     element: <UpdateStory/>
   },
   {
@@ -29,6 +30,10 @@ const AppRoutes = [
   {
     path:'/mylikes',
     element: <MyLikes/>
+  },
+  {
+    path:'/stories/:sId',
+    element: <Stories/>
   },
   {
     path:'*',
