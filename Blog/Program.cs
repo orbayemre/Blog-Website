@@ -45,8 +45,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 
     //Path settings
-    options.LoginPath = "/Identity/Account/Login"; //provisional
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";//provisional
+    options.LoginPath = "/auth"; //provisional
+    options.AccessDeniedPath = "/auth";//provisional
 
 });
 builder.Services.AddHttpContextAccessor();

@@ -3,21 +3,44 @@ import {NavLink} from "react-router-dom";
 import LottieAnimation from "./LottieAnimation";
 import ProfileMenu from "./profileMenu";
 import useGetUser from "../../Hooks/useGetUser";
-import {useEffect, useState} from "react";
+import {useEffect, useState,useRef} from "react";
 import {setUser} from "../../Stores/auth";
 import Loading from "./Loading";
 
 export default function NavBar({page}){
     const userData = useGetUser();
     const dispatch = useDispatch();
+    const navmenu = useRef();
+    const navlink = useRef();
     const {user} = useSelector(state => state.auth);
     const [loading,setLoading] = useState(true);
+
+    useEffect(()=>{
+
+            if(page === ("update" || "new")){
+                setTimeout(()=>{
+                    navmenu.current.style.top = "-100px";
+                },1000)
+            }
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+                var currentScrollPos = window.pageYOffset;
+                if(navmenu.current){
+                    if (prevScrollpos > currentScrollPos) {
+                        navmenu.current.style.top = "0";
+                    } else {
+                        navmenu.current.style.top = "-100px";
+                    }
+                }
+                prevScrollpos = currentScrollPos;
+            }
+    },[])
 
     useEffect(()=>{
         if(userData === "no user"){
             setLoading(false);
             dispatch(setUser(userData));
-            if(page !== "home") window.location.replace("https://localhost:44418/auth");
+            if(page !== "home" && page !== "stories") window.location.replace("https://localhost:44418/auth");
         }
         else if (userData){
             dispatch(setUser(userData));
@@ -29,17 +52,19 @@ export default function NavBar({page}){
     },[userData]);
     if(loading) return <Loading/>
     return(
-        <div className="fixed top-0 w-full h-16 bg-second flex items-center justify-start px-6 fontSignika shadow z-10">
-            <NavLink to={"/"} className="w-1/4 flex items-center justify-start">
+        <>
+            <NavLink ref={navlink} to={"/"} className="fixed left-6 top-0 w-1/4 flex items-center justify-start z-20">
                 <LottieAnimation link={"https://assets4.lottiefiles.com/private_files/lf30_dezgszkb.json"} width={"70px"} height={"70px"}/>
                 <div  className="flex flex-col text-2xl fontSource text-first items-center justify-end mr-12 ml-4 space-y-0 leading-none">
                     <span>BLOG</span>
                     <span>WEBSITE</span>
                 </div>
             </NavLink>
+        <div ref={navmenu} className="absolute duration-500 fixed top-0 w-full h-16 bg-second flex items-center justify-center fontSignika shadow z-10">
             { (user === "no user" || !user) ? "" :
                 <div className="w-1/3 text-lg text-white flex items-center justify-center space-x-12">
-                    <NavLink to={"/"} className="navItem cursor-pointer text-sm transition duration-200 hover:text-first flex flex-col items-center justify-center">
+                    <NavLink to={"/"} className={"navItem cursor-pointer text-sm transition duration-200 hover:text-gray-300 flex flex-col items-center justify-center"+
+                        (page === "home" ? " text-first" : "")}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                              stroke="currentColor" className="w-5 h-5">
                             <path strokeLinecap="round" strokeLinejoin="round"
@@ -47,7 +72,8 @@ export default function NavBar({page}){
                         </svg>
                         <span>Keşfet</span>
                     </NavLink>
-                    <NavLink to={"/mystories"} className="navItem cursor-pointer text-sm transition duration-200 hover:text-first flex flex-col items-center justify-center">
+                    <NavLink to={"/mystories"} className={"navItem cursor-pointer text-sm transition duration-200 hover:text-gray-300 flex flex-col items-center justify-center"+
+                        (page === "mystories" ? " text-first" : "")}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                              stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round"
@@ -55,7 +81,8 @@ export default function NavBar({page}){
                         </svg>
                         <span>Yazılarım</span>
                     </NavLink>
-                    <NavLink to={"/new"} className="navItem cursor-pointer text-sm transition duration-200 hover:text-first flex flex-col items-center justify-center">
+                    <NavLink to={"/new"} className={"navItem cursor-pointer text-sm transition duration-200 hover:text-gray-300 flex flex-col items-center justify-center"+
+                        (page === "new" ? " text-first" : "")}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                              stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round"
@@ -63,7 +90,8 @@ export default function NavBar({page}){
                         </svg>
                         <span>Yeni yazı</span>
                     </NavLink>
-                    <NavLink to={"/mylikes"} className="navItem cursor-pointer text-sm transition duration-200 hover:text-first flex flex-col items-center justify-center">
+                    <NavLink to={"/mylikes"} className={"navItem cursor-pointer text-sm transition duration-200 hover:text-gray-300 flex flex-col items-center justify-center"+
+                        (page === "mylikes" ? " text-first" : "")}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                              stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round"
@@ -73,8 +101,10 @@ export default function NavBar({page}){
                     </NavLink>
                 </div>
             }
+        </div>
+
             { user === "no user" ?
-                <div className="w-1/3 absolute right-6  text-first flex items-center justify-end mr-24 space-x-3 rounded-xl">
+                <div className="w-1/3 right-12 top-2 z-10 fixed fontSignika text-first flex items-center justify-end mt-2 space-x-3 rounded-xl z-20">
                     <NavLink to={"/auth"} className="cursor-pointer hover:text-firstHover transition duration-200">Giriş yap</NavLink>
                     <NavLink to={"/auth?q=register"} className="cursor-pointer bg-first py-1 px-4 text-second rounded-2xl
                      hover:text-second hover:bg-firstHover transition duration-200">Kayıt ol</NavLink>
@@ -82,6 +112,6 @@ export default function NavBar({page}){
                 !user ? "":<ProfileMenu user={user}/>
             }
 
-        </div>
+        </>
     )
 }

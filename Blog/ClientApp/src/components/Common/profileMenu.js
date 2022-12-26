@@ -11,11 +11,10 @@ export default function ProfileMenu({user}){
         const response = await fetch('account/logout', {method: 'POST'});
         const data = await response.json();
         window.location.reload();
-        console.log(data);
         dispatch(setUser("no user"));
     }
     return(
-        <div className="absolute right-6">
+        <div className="right-6 top-2 z-10 fixed">
             <Menu>
                 <Menu.Button  className="cursor-pointer flex justify-center items-start space-x-3 rounded-md bg-black bg-opacity-0 duration-200 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -37,7 +36,7 @@ export default function ProfileMenu({user}){
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute right-0 mt-0.5 w-full origin-top-right divide-y divide-baseColor rounded-md bg-background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 mt-0.5 w-full origin-top-right rounded-md bg-background shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="">
                             <Menu.Item>
                                 <div>

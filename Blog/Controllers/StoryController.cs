@@ -13,12 +13,14 @@ namespace Blog.Controllers
     [Authorize]
     public class StoryController : ControllerBase
     {
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<List<Story>> GetAll()
         {
-            return StoryRepository.Stories;
+            return StoryRepository.getAllStories();
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public ActionResult<Story> GetById(string id)
         {

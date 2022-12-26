@@ -18,6 +18,7 @@ namespace Blog.Repository
         public static List<Story> GetLikesByUserId(string uId)
         {
             using var context = new blogContext();
+            context.SaveChanges();
 
             var resultLikes = context.Likes.Where(like => like.UserId == uId).ToList();
             if (resultLikes == null) { return null; }
@@ -38,6 +39,7 @@ namespace Blog.Repository
         {
 
             using var context = new blogContext();
+            context.SaveChanges();
 
             var resultLikes = context.Likes.Where(like => like.StoryId == sId).ToList();
             if (resultLikes == null) { return null; }

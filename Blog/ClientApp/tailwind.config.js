@@ -10,6 +10,7 @@ module.exports = {
           'firstHover': '#113046',
           'second' : '#ee6c4d',
           'third' : '#8ecae6',
+          'story' :'#EAEAEA',
         }
       },
 

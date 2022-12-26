@@ -13,9 +13,12 @@ namespace Blog.Repository
             _stories = context.Stories.ToList();
         }
 
-        public static List<Story> Stories 
-        { 
-            get { return _stories; } 
+        public static List<Story> getAllStories()
+        {
+            using var context = new blogContext();
+            context.SaveChanges();
+
+            return context.Stories.ToList();
         }
 
         public static void CreateStory(Story sData)
@@ -48,8 +51,8 @@ namespace Blog.Repository
 
         public static List<Story> GetStoriesByUserId(string uId)
         {
-
             using var context = new blogContext();
+            context.SaveChanges();
 
             var result = context.Stories.Where(story => story.UserId == uId).ToList();
             if (result == null) { return null; }

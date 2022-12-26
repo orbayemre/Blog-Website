@@ -47,7 +47,7 @@ const formats = [
     "background",
 ];
 
-function Editor({editorType="new",data={title:"",content:""},userId}) {
+function Editor({editorType="new",data={title:"",content:""},userId,storyId}) {
 
     const [titleValue,setTitleValue] = useState(data.title);
     const [contentValue,setContentValue] = useState(data.content);
@@ -64,10 +64,10 @@ function Editor({editorType="new",data={title:"",content:""},userId}) {
     };
 
     const handleSave = async ()=>{
-        if(editorType === "new"){
-            if(extractContent(contentValue) === "") toast.error("İçerik olmadan kaydedemezsiniz.");
-            else if(titleValue === "") toast.error("Başlık zorunludur.");
-            else{
+
+        if(extractContent(contentValue) === "") toast.error("İçerik olmadan kaydedemezsiniz.");
+        else if(titleValue === "") toast.error("Başlık zorunludur.");
+        else if(editorType === "new"){
                 const response = await fetch('/story', {
                     method: 'POST',
                     headers: {
@@ -79,7 +79,19 @@ function Editor({editorType="new",data={title:"",content:""},userId}) {
                 const data = await response.json();
                 toast.success("Kaydedildi.");
                 //hata mesajı da yazdırılacak
-            }
+        }
+        else if(editorType === "update"){
+            const response = await fetch('/story', {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({StoryId:storyId,Title:titleValue,Content:contentValue})
+            });
+            const data = await response.json();
+            toast.success("Kaydedildi.");
+            //hata mesajı da yazdırılacak
         }
 
     }
@@ -90,7 +102,7 @@ function Editor({editorType="new",data={title:"",content:""},userId}) {
     }
     return (
         <>
-            <div className="w-full">
+            <div className="w55">
                 <input placeholder="Başlık" value={titleValue} onChange={(e)=> setTitleValue(e.target.value)} className="w-full shadow py-2 px-4 outline-none bg-white mb-4 border border-gray-300"/>
                 <ReactQuill
                     className="mb-12"
@@ -101,7 +113,7 @@ function Editor({editorType="new",data={title:"",content:""},userId}) {
                     value={contentValue}
                     onChange={handleChange}
                 />
-                <div className="w-full fontSignika mt-20 mb-10 flex items-center justify-end space-x-6">
+                <div className="w-full fontSignika mt-16 mb-2 flex items-center justify-end space-x-6">
                     <span onClick={handleSave} className="w-28 text-green-600 border-2 border-green-600 shadow-xl hover:bg-green-600 hover:text-white transition duration-200 py-2 px-4 flex items-center justify-center rounded-lg cursor-pointer">
                         {editorType==="new" ? "Kaydet" : "Güncelle"}
                     </span>
