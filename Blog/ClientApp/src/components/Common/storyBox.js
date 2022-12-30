@@ -99,7 +99,7 @@ export default function StoryBox({story,isLiked=false,userId,page}){
 
                             <NavLink to={"/stories/"+story?.storyId}>
                                 <div className="flex items-center justify-start space-x-3">
-                                    <span className="text-sm">{author?.userName}</span>
+                                    <NavLink to={"/storiesby/"+author?.id} className="text-sm">{author?.userName}</NavLink>
                                     <span className="h-1 w-0.5 bg-gray-400 rounded-full"></span>
                                     <span className="font-bold">{getDateAgo()}</span>
                                 </div>

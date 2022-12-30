@@ -3,6 +3,7 @@ import NavBar from "./Common/NavBar";
 import Loading from "./Common/Loading";
 import { Tooltip } from '@chakra-ui/react';
 import {useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
 export default function Stories(){
 
 
@@ -114,14 +115,14 @@ export default function Stories(){
                                 </span>
                             </div>
                             <div className="w-1/5 fontSource flex items-center justify-end mr-4 ">
-                                <div className=" flex flex-col items-center justify-center">
+                                <NavLink to={"/storiesby/"+author.id} className=" flex flex-col items-center justify-center">
                                     <Tooltip label={author?.email} aria-label='A tooltip' className="bg-gray-300 px-2 rounded text-sm fontSignika">
                                         <div className="flex flex-col items-center justify-center pr-4 pl-2 py-1 rounded-xl hover:bg-gray-300 cursor-pointer">
                                             <span className="font-bold text-xl text-gray-700 pl-2">@{author?.userName} </span>
                                             <span className="font-bold fontSize11 text-gray-400">Yazar</span>
                                         </div>
                                     </Tooltip>
-                                </div>
+                                </NavLink>
                                 { user !== "no user" ? <div  onClick={toggleLike} className="cursor-pointer text-second z-20 ml-4 flex flex-col items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={liked ? " w-6 h-6 fill-second" :"w-6 h-6"}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />

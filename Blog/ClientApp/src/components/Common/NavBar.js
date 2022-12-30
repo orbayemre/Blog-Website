@@ -53,13 +53,13 @@ export default function NavBar({page}){
     if(loading) return <Loading/>
     return(
         <>
-            <NavLink ref={navlink} to={"/"} className="fixed left-6 top-0 w-1/4 flex items-center justify-start z-20">
+            <div ref={navlink} className="fixed left-6 top-0 w-1/4 flex items-center justify-start z-20">
                 <LottieAnimation link={"https://assets4.lottiefiles.com/private_files/lf30_dezgszkb.json"} width={"70px"} height={"70px"}/>
-                <div  className="flex flex-col text-2xl fontSource text-first items-center justify-end mr-12 ml-4 space-y-0 leading-none">
+                <NavLink  to={"/"} className="flex flex-col text-2xl fontSource text-first items-center justify-end mr-12 ml-4 space-y-0 leading-none">
                     <span>BLOG</span>
                     <span>WEBSITE</span>
-                </div>
-            </NavLink>
+                </NavLink>
+            </div>
         <div ref={navmenu} className="absolute duration-500 fixed top-0 w-full h-16 bg-second flex items-center justify-center fontSignika shadow z-10">
             { (user === "no user" || !user) ? "" :
                 <div className="w-1/3 text-lg text-white flex items-center justify-center space-x-12">

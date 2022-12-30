@@ -6,6 +6,7 @@ import MyStories from "./components/MyStories";
 import MyLikes from "./components/MyLikes";
 import UpdateStory from "./components/UpdateStory";
 import Stories from "./components/Stories";
+import StoriesBy from "./components/StoriesBy";
 const AppRoutes = [
   {
     index: true,
@@ -34,6 +35,10 @@ const AppRoutes = [
   {
     path:'/stories/:sId',
     element: <Stories/>
+  },
+  {
+    path:'/storiesby/:uId',
+    element: <StoriesBy/>
   },
   {
     path:'*',

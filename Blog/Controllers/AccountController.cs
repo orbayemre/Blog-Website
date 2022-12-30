@@ -110,8 +110,5 @@ namespace Blog.Controllers
             if (user == null) return Ok(JsonSerializer.Serialize("no user"));
             return Ok(user);
         }
-
-
-
     }
 }

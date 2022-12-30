@@ -79,6 +79,7 @@ function Editor({editorType="new",data={title:"",content:""},userId,storyId}) {
                 const data = await response.json();
                 toast.success("Kaydedildi.");
                 //hata mesajı da yazdırılacak
+            window.location.replace("https://localhost:44418/mystories");
         }
         else if(editorType === "update"){
             const response = await fetch('/story', {
@@ -92,7 +93,9 @@ function Editor({editorType="new",data={title:"",content:""},userId,storyId}) {
             const data = await response.json();
             toast.success("Kaydedildi.");
             //hata mesajı da yazdırılacak
+            window.location.replace("https://localhost:44418/mystories");
         }
+
 
     }
     const handleCancel = async () =>{

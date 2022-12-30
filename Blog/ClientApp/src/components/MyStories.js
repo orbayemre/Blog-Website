@@ -7,7 +7,7 @@ export default function MyStories(){
 
     const {user} = useSelector(state => state.auth);
     const [stories,setStories] = useState(null);
-    const [likes,setlikes] = useState(null);
+    const [likes,setLikes] = useState(null);
 
     const getStories = async () => {
         const response = await fetch('/story/userAllStories/'+user?.id);
@@ -17,7 +17,7 @@ export default function MyStories(){
     const getuserLikes = async () => {
         const response = await fetch('/like/byuserid/'+user?.id);
         const data = await response.json();
-        setlikes(data);
+        setLikes(data);
     }
 
     useEffect(()=>{
