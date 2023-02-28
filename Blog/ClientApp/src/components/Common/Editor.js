@@ -3,6 +3,7 @@ import ReactQuill,{ Quill }  from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageResize from 'quill-image-resize-module-react';
 import toast,{Toaster} from "react-hot-toast";
+import {useNavigate} from "react-router-dom";
 
 Quill.register('modules/imageResize', ImageResize);
 
@@ -51,6 +52,7 @@ function Editor({editorType="new",data={title:"",content:""},userId,storyId}) {
 
     const [titleValue,setTitleValue] = useState(data.title);
     const [contentValue,setContentValue] = useState(data.content);
+    const navigate = useNavigate();
 
     const handleChange = (content, delta, source, editor) => {
         //console.log(editor.getHTML());  html 사용시
@@ -79,7 +81,8 @@ function Editor({editorType="new",data={title:"",content:""},userId,storyId}) {
                 const data = await response.json();
                 toast.success("Kaydedildi.");
                 //hata mesajı da yazdırılacak
-            window.location.replace("https://localhost:44418/mystories");
+                navigate("/mystories");
+                // window.location.replace("https://localhost:44418/mystories");
         }
         else if(editorType === "update"){
             const response = await fetch('/story', {
@@ -93,7 +96,8 @@ function Editor({editorType="new",data={title:"",content:""},userId,storyId}) {
             const data = await response.json();
             toast.success("Kaydedildi.");
             //hata mesajı da yazdırılacak
-            window.location.replace("https://localhost:44418/mystories");
+            navigate("/mystories");
+            //window.location.replace("https://localhost:44418/mystories");
         }
 
 

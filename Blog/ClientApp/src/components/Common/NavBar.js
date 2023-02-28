@@ -6,6 +6,7 @@ import useGetUser from "../../Hooks/useGetUser";
 import {useEffect, useState,useRef} from "react";
 import {setUser} from "../../Stores/auth";
 import Loading from "./Loading";
+import {useNavigate} from "react-router-dom";
 
 export default function NavBar({page}){
     const userData = useGetUser();
@@ -14,6 +15,7 @@ export default function NavBar({page}){
     const navlink = useRef();
     const {user} = useSelector(state => state.auth);
     const [loading,setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(()=>{
 
@@ -40,7 +42,7 @@ export default function NavBar({page}){
         if(userData === "no user"){
             setLoading(false);
             dispatch(setUser(userData));
-            if(page !== "home" && page !== "stories") window.location.replace("https://localhost:44418/auth");
+            if(page !== "home" && page !== "stories") navigate("/auth"); //window.location.replace("https://localhost:44418/auth");
         }
         else if (userData){
             dispatch(setUser(userData));
@@ -60,7 +62,7 @@ export default function NavBar({page}){
                     <span>WEBSITE</span>
                 </NavLink>
             </div>
-        <div ref={navmenu} className="absolute duration-500 fixed top-0 w-full h-16 bg-second flex items-center justify-center fontSignika shadow z-10">
+        <div ref={navmenu} className="duration-500 fixed top-0 w-full h-16 bg-second flex items-center justify-center fontSignika shadow z-10">
             { (user === "no user" || !user) ? "" :
                 <div className="w-1/3 text-lg text-white flex items-center justify-center space-x-12">
                     <NavLink to={"/"} className={"navItem cursor-pointer text-sm transition duration-200 hover:text-gray-300 flex flex-col items-center justify-center"+
@@ -104,7 +106,7 @@ export default function NavBar({page}){
         </div>
 
             { user === "no user" ?
-                <div className="w-1/3 right-12 top-2 z-10 fixed fontSignika text-first flex items-center justify-end mt-2 space-x-3 rounded-xl z-20">
+                <div className="w-1/3 right-12 top-2 fixed fontSignika text-first flex items-center justify-end mt-2 space-x-3 rounded-xl z-20">
                     <NavLink to={"/auth"} className="cursor-pointer hover:text-firstHover transition duration-200">Giriş yap</NavLink>
                     <NavLink to={"/auth?q=register"} className="cursor-pointer bg-first py-1 px-4 text-second rounded-2xl
                      hover:text-second hover:bg-firstHover transition duration-200">Kayıt ol</NavLink>

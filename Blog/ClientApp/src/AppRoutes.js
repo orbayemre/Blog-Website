@@ -7,6 +7,8 @@ import MyLikes from "./components/MyLikes";
 import UpdateStory from "./components/UpdateStory";
 import Stories from "./components/Stories";
 import StoriesBy from "./components/StoriesBy";
+import Settings from "./components/Settings";
+
 const AppRoutes = [
   {
     index: true,
@@ -39,6 +41,10 @@ const AppRoutes = [
   {
     path:'/storiesby/:uId',
     element: <StoriesBy/>
+  },
+  {
+    path:'/settings/:uId',
+    element: <Settings/>
   },
   {
     path:'*',

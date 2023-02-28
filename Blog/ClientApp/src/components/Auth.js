@@ -6,6 +6,9 @@ import {setUser} from "../Stores/auth";
 import useGetUser from "../Hooks/useGetUser";
 import Loading from "./Common/Loading";
 import {NavLink, useSearchParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+
+
 
 export default function Auth(){
 
@@ -13,6 +16,7 @@ export default function Auth(){
     const [loading,setLoading] = useState(true);
     const userData = useGetUser();
     const [searchParams,setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     useEffect(()=>{
         if(searchParams.get('q') === "register") setShownLogin(false);
@@ -23,7 +27,9 @@ export default function Auth(){
             setLoading(false);
         }
         else if (userData){
-            window.location.replace("https://localhost:44418/");
+            
+            navigate("/"); 
+            //window.location.replace("https://localhost:44418/");
         }
         else{
             setLoading(true);
@@ -78,6 +84,7 @@ const Login = (setLoad) =>{
     const [passwordShow,setPasswordShow] = useState();
     const [password,setPassword] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const validateEmail = (email) => {
         return String(email)
@@ -109,7 +116,8 @@ const Login = (setLoad) =>{
             if(typeof data === "string"){toast.error(data)}
             else{
                 await dispatch(setUser(data));
-                window.location.replace("https://localhost:44418/");
+                navigate("/");
+                //window.location.replace("https://localhost:44418/");
                 setLoad(true);
             }
         }
@@ -126,7 +134,8 @@ const Login = (setLoad) =>{
             if(typeof data === "string"){toast.error(data)}
             else {
                 await dispatch(setUser(data));
-                window.location.replace("https://localhost:44418/");
+                navigate("/");
+                //window.location.replace("https://localhost:44418/");
                 setLoad(true);
             }
         }
@@ -191,6 +200,7 @@ const SignUp = (setLoad) =>{
     const [confirmPassword,setConfirmPassword] = useState("");
     const [errMess,setErrMess] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const validateEmail = (email) => {
         return String(email)
@@ -227,7 +237,8 @@ const SignUp = (setLoad) =>{
             if(typeof data === "string"){toast.error(data)}
             else {
                 await dispatch(setUser(data));
-                window.location.replace("https://localhost:44418/");
+                navigate("/");
+                //window.location.replace("https://localhost:44418/");
                 setLoad(true);
             }
         }

@@ -1,16 +1,21 @@
 import {Menu, Transition} from "@headlessui/react";
 import {Fragment} from "react";
+import {useNavigate} from "react-router-dom";
 
 export default function OptionsMenu({storyId}){
+    
+    const navigate = useNavigate();
     const handleEdit = () =>{
-        window.location.replace("https://localhost:44418/update/"+storyId);
+        navigate("/update/" + storyId);
+        //window.location.replace("https://localhost:44418/update/"+storyId);
     }
     const handleDelete = async () =>{
 
         const response = await fetch('/story/'+storyId, {
             method: 'DELETE'});
         const data = await response.json();
-        window.location.replace("https://localhost:44418/mystories");
+        navigate("/mystories");
+        //window.location.replace("https://localhost:44418/mystories");
         console.log(data);
     }
 
